@@ -1,3 +1,6 @@
-const pg = require('pg');
-const dotenv = require('dotenv')
-const connectionString = process.env.DATABASE_URL 
+const pg = require('pg')
+const fs = require('fs')
+
+if(fs.existSync('.env')){
+  require('dotenv').config()
+}
