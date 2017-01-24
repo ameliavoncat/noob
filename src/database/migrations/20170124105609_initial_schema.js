@@ -4,11 +4,10 @@ exports.up = function(knex, Promise) {
   return Promise.all([
 
     knex.schema.createTable('noob', function(table) {
-      table.increments('id').primary();
-      table.integer('user_id');
+      table.inherits('users');
       table.integer('mentor_id');
       table.date('start_date');
-      table.timestamps();
+
     }),
 
     knex.schema.createTable('task', function(table) {
