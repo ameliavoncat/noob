@@ -7,7 +7,6 @@ import bodyParser from 'body-parser'
 
 import index from './routes/index'
 import auth from './init/auth'
-import env from './config/config'
 
 const app = express()
 

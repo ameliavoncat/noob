@@ -9,5 +9,8 @@ if ( fs.existSync('.env') ) {
 const env = () =>
  process.env.NODE_ENV || 'development'
 
+if ( fs.existsSync('.env') ){
+  require('dotenv').config()
+}
 
-export { env, host_url, login_url }
+export { env }

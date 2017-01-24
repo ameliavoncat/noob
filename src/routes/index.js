@@ -4,8 +4,7 @@ const pg = require('pg')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  // res.render('index', { title: 'Express' })
-  res.send('hello')
+  res.send('Server is running <3 <3')
 })
 
 module.exports = router
