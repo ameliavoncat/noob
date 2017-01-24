@@ -1,7 +1,7 @@
 import { addUserToRequestFromJWT } from '@learnersguild/idm-jwt-auth/lib/middlewares'
 
 const URL = 'http://idm.learnersguild.dev'
-const REDIRECT = encodeURIComponent('https://noob.apps.learnersguild.org')
+const REDIRECT = encodeURIComponent('http://noob.learnersguild.dev')
 
 const init = app => {
   app.use( addUserToRequestFromJWT )
