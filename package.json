@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "babel-node": "babel-node ./bin/www",
-    "start": "nodemon --exec babel-node"
+    "start": "./node_modules/.bin/nodemon ./bin/www --exec babel-node"
   },
   "dependencies": {
     "@learnersguild/idm-jwt-auth": "^1.2.1",
