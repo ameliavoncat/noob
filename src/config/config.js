@@ -1,5 +1,11 @@
 const fs = require('fs')
+const connectionString = process.env.DATABASE_URL
 
-if(fs.existsSync('../../.env')){
+const env = () =>
+  process.env.NODE_ENV || 'development'
+
+if ( fs.existSync('.env') ) {
   require('dotenv').config()
 }
+
+export { env }
