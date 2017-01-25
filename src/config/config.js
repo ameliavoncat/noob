@@ -1,11 +1,29 @@
-const fs = require('fs')
-const connectionString = process.env.DATABASE_URL
+import pg from 'pg'
+import fs from 'fs'
+import path from 'path'
 
-const env = () =>
-  process.env.NODE_ENV || 'development'
-
-if ( fs.existSync('.env') ) {
+if ( fs.existsSync('.env') ) {
   require('dotenv').config()
 }
 
-export { env }
+const connectionString = process.env.DATABASE_URL
+
+const getEnv = () =>
+  process.env.NODE_ENV || 'development'
+
+let config
+
+const parseConfig = () => {
+  if ( config ) {
+    return config
+  }
+    const filepath = path.join(__dirname, `./${getEnv()}.json`)
+    try {
+      config = JSON.parse(fs.readFileSync(filepath).toString())
+      return config
+    } catch(error) {
+      throw new Error(`NODE_ENV points to invalid filepath:  ${filepath}`)
+    }
+}
+
+export { getEnv, parseConfig }
