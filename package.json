@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/nodemon ./bin/www --exec babel-node",
-    "test": "mocha --compilers js:babel-register ./src/tests/**/*.js"
+    "test": "mocha --require babel-register ./src/tests/**/*.js"
   },
   "dependencies": {
     "@learnersguild/idm-jwt-auth": "^1.2.1",
