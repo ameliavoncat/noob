@@ -1,4 +1,4 @@
-const config = require('../config/config.js')
+import config from '../config/config.js'
 
 const defaultConfig = env => {
   const connectionString = process.env.DATABASE_URL ||
@@ -21,4 +21,4 @@ const defaultConfig = env => {
   }
 }
 
-module.exports = { 'development': defaultConfig('development') }
+export default { 'development': defaultConfig('development') }
