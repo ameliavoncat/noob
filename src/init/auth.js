@@ -10,6 +10,7 @@ const initialize = app => {
 }
 
 const ensureUserLoggedIn = (req, res, next) => {
+
   const config = parseConfig(),
     redirect = encodeURIComponent(config.redirect_url)
 
@@ -20,3 +21,4 @@ const ensureUserLoggedIn = (req, res, next) => {
 }
 
 export default initialize
+
