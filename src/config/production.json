@@ -1,0 +1,6 @@
+{
+  "env": "production",
+  "url": "https://noob.apps.learnersguild.org",
+  "redirect_url": "https://noob.apps.learnersguild.org",
+  "idm_url": "http://idm.learnersguild.org"
+}

@@ -1,0 +1,103 @@
+#! /bin/bash
+
+function help {
+    echo "Usage"
+    echo "./go init         ............ Installs all dependencies and makes Noob ready for development"
+    echo "./go install_idm  ............ Installs the IDM service"
+}
+
+function reset_db {
+    env=${1-:test}
+    dbname=noob-${env}
+    dropdb ${dbname}
+    createdb ${dbname}
+    # migrate
+    # npm run migrate
+}
+
+function init {
+    echo "Initializing: add initialization steps here"
+    npm install    
+}
+
+function add_env_var_to_shell {
+    if [ $SHELL = "/bin/bash" ] ; then
+        echo "${1}" >> ~/.bashrc
+    elif [ $SHELL = "/bin/zsh" ]; then
+        echo "${1}" >> ~/.zshrc
+    fi
+}
+
+function source_shell_profile {
+    if [ $SHELL = "/bin/bash" ] ; then
+        source ~/.bashrc
+    elif [ $SHELL = "/bin/zsh" ]; then
+        source ~/.zshrc
+    fi
+}
+
+function install_idm {
+    PROJECT_HOME="${PWD}"
+    IDM_HOME="${PWD}/../idm"
+    if ! [ -d "idm" ]; then
+        git clone git@github.com:LearnersGuild/idm.git ${IDM_HOME}
+    fi
+    
+    if ! [ $NODE_ENV ]; then
+        add_env_var_to_shell "export NODE_ENV=development"
+    fi
+
+    echo "installing rethinkdb.."
+    brew install rethinkdb
+    brew services start rethinkdb
+    echo "...done installing rethinkdb"
+
+    echo "installing redis..."
+    brew install redis
+    brew services start redis
+    echo "...done installing redis"
+
+    if ! [ -f "../idm/.env.development" ]; then
+        echo "creating a .env.development file for idm"
+        cp idm/.env.template ../idm/.env.development
+    fi
+    
+    echo "Going to login to npmjs.org. " 
+    echo "If you dont remember the password, goto npmjs.org to reset password or create new account"
+    if ! [ -f "${HOME}/.npmrc" ]; then
+        npm login
+    fi
+    add_env_var_to_shell "export NPM_AUTH_TOKEN=$(cat ${HOME}/.npmrc | grep _authToken | cut -d '=' -f2)"
+    source_shell_profile
+    cd ${IDM_HOME}
+    echo "installing npm packages"
+    npm install
+    echo "going to create db"
+    npm run db:create
+    echo "running migrations"
+    npm run db:migrate -- up
+
+    echo "Install Mehserve"
+    npm install mehserve -g
+    mkdir -p ~/.mehserve
+    echo 9001 > ~/.mehserve/idm.learnersguild
+    echo 3000 > ~/.mehserve/noob.learnersguild
+    mehserve install 
+    echo "!!!! IMPORTANT !!!!"
+    echo "paste the 5 commands above for successfull mehserve configuration"
+}
+
+if [ -z "${1}" ] ; then
+    init
+    echo "Additional commands you can run -"
+    help
+    exit 0
+fi
+
+case $1 in
+    init) init $@
+    ;;
+    install_idm | install-idm) install_idm $@
+    ;;
+    *) help
+esac
