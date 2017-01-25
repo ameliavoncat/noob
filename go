@@ -28,6 +28,14 @@ function add_env_var_to_shell {
     fi
 }
 
+function source_shell_profile {
+    if [ $SHELL = "/bin/bash" ] ; then
+        source ~/.bashrc
+    elif [ $SHELL = "/bin/zsh" ]; then
+        source ~/.zshrc
+    fi
+}
+
 function install_idm {
     PROJECT_HOME="${PWD}"
     IDM_HOME="${PWD}/../idm"
@@ -60,7 +68,7 @@ function install_idm {
         npm login
     fi
     add_env_var_to_shell "export NPM_AUTH_TOKEN=$(cat ${HOME}/.npmrc | grep _authToken | cut -d '=' -f2)"
-
+    source_shell_profile
     cd ${IDM_HOME}
     echo "installing npm packages"
     npm install
@@ -74,7 +82,7 @@ function install_idm {
     mkdir -p ~/.mehserve
     echo 9001 > ~/.mehserve/idm.learnersguild
     echo 3000 > ~/.mehserve/noob.learnersguild
-    mehserve install
+    mehserve install 
     echo "!!!! IMPORTANT !!!!"
     echo "paste the 5 commands above for successfull mehserve configuration"
 }
