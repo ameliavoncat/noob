@@ -7,17 +7,21 @@ function help {
 }
 
 function reset_db {
-    env=${1-:test}
+    env=${1:-test}
     dbname=noob-${env}
     dropdb ${dbname}
     createdb ${dbname}
-    # migrate
-    # npm run migrate
+    NODE_ENV=${env} npm run migrate
+}
+
+function test {
+  reset_db test
+  NODE_ENV=test npm run test
 }
 
 function init {
     echo "Initializing: add initialization steps here"
-    npm install    
+    npm install
 }
 
 function add_env_var_to_shell {
@@ -42,7 +46,7 @@ function install_idm {
     if ! [ -d "idm" ]; then
         git clone git@github.com:LearnersGuild/idm.git ${IDM_HOME}
     fi
-    
+
     if ! [ $NODE_ENV ]; then
         add_env_var_to_shell "export NODE_ENV=development"
     fi
@@ -61,8 +65,8 @@ function install_idm {
         echo "creating a .env.development file for idm"
         cp idm/.env.template ../idm/.env.development
     fi
-    
-    echo "Going to login to npmjs.org. " 
+
+    echo "Going to login to npmjs.org. "
     echo "If you dont remember the password, goto npmjs.org to reset password or create new account"
     if ! [ -f "${HOME}/.npmrc" ]; then
         npm login
@@ -82,7 +86,7 @@ function install_idm {
     mkdir -p ~/.mehserve
     echo 9001 > ~/.mehserve/idm.learnersguild
     echo 3000 > ~/.mehserve/noob.learnersguild
-    mehserve install 
+    mehserve install
     echo "!!!! IMPORTANT !!!!"
     echo "paste the 5 commands above for successfull mehserve configuration"
 }
@@ -98,6 +102,8 @@ case $1 in
     init) init $@
     ;;
     install_idm | install-idm) install_idm $@
+    ;;
+    reset_db) shift; reset_db $@
     ;;
     *) help
 esac
