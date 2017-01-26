@@ -23,7 +23,7 @@ export default function userCan(currentUser, capability) {
         throw new Error(`No such capability '${capability}'`)
     }
     const permitted = roles.filter(role => (
-        CAPABILITY_ROLES[capability].indexOf(role) >= 0
+        CAPABILITY_ROLES[capability].includes(role)
     )).length > 0
 
     return permitted
