@@ -8,11 +8,6 @@ import {
   findAllRecords,
   findAll } from './utilities'
 
-const graduateNoob = github_handle =>
-  findRecord()
-  deleteRecord('noob', 'github_handle', github_handle)
-
-
 const createNoob = attributes =>
   createRecord('noob', attributes).then( noob => noob )
 
@@ -31,11 +26,19 @@ const getAllNoobsByStartDate = start_date =>
 const findAllNoobs = () =>
   findAll('noob').then(noob => noob)
 
+const graduateNoob = github_handle => {
+  let updatedAttributes = findRecord( 'noob', 'github_handle', github_handle )
+  updatedAttributes.role = 'mentor'
+  deleteRecord('noob', 'github_handle', github_handle)
+  createRecord( 'user', 'github_handle', github_handle, updatedAttributes ).then(user => user)
+}
+
 export default {
   createNoob,
   findNoobByHandle,
   updateNoobByHandle,
   deleteNoobByHandle,
   getAllNoobsByStartDate,
-  findAllNoobs
+  findAllNoobs,
+  graduateNoob
 }
