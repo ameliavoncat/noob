@@ -41,7 +41,7 @@ const deleteRecord = (table, column, data) =>
     .where(column, data)
     .del()
 
- export default {
+ export {
     createRecord,
     deleteRecord,
     findRecord,
