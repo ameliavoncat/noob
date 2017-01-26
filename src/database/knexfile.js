@@ -21,6 +21,6 @@ const makeKnexConfig = env => {
   }
 }
 
-const knexConfig = makeKnexConfig(getEnv())
+const knexConfig = makeKnexConfig( getEnv() )
 
-module.exports = { knexConfig }
+module.exports = knexConfig
