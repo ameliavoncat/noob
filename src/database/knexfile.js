@@ -20,7 +20,8 @@ const setKnexConfig = env => {
 }
 
 const knexConfig = {
-  'development': setKnexConfig('development')
+  'development': setKnexConfig('development'),
+  'test': setKnexConfig('test')
 }
 
 module.exports = knexConfig

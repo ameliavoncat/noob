@@ -4,6 +4,8 @@ function help {
     echo "Usage"
     echo "./go init         ............ Installs all dependencies and makes Noob ready for development"
     echo "./go install_idm  ............ Installs the IDM service"
+    echo "./go reset_db **environment** ............ Drops and creates database according to environment argument"
+    echo "./go test ............ Runs reset_db test, then runs test scripts"
 }
 
 function reset_db {
@@ -104,6 +106,8 @@ case $1 in
     install_idm | install-idm) install_idm $@
     ;;
     reset_db) shift; reset_db $@
+    ;;
+    test) shift; test $@
     ;;
     *) help
 esac
