@@ -16,7 +16,7 @@ const findRecord = (table, column, data) =>
     .returning('*')
     .then(firstRecord)
 
-const findAllRecords = (table, column, data) =>
+const findAllWhere = (table, column, data) =>
   knex
     .table(table)
     .where(column, data)
@@ -47,6 +47,6 @@ const deleteRecord = (table, column, data) =>
     findRecord,
     firstRecord,
     updateRecord,
-    findAllRecords,
+    findAllWhere,
     findAll
 }

@@ -5,7 +5,7 @@ import {
   findRecord,
   updateRecord,
   deleteRecord,
-  findAllRecords,
+  findAllWhere,
   findAll } from './utilities'
 
 const createUser = attributes =>
@@ -21,7 +21,7 @@ const deleteUserByHandle = github_handle =>
   deleteRecord('users', 'github_handle', github_handle)
 
 const findUserByRole = role =>
-  findAllRecords('users', 'role', role ).then(user => user)
+  findAllWhere('users', 'role', role ).then(user => user)
 
 const findAllUsers = () =>
   findAll('users').then(user => user)

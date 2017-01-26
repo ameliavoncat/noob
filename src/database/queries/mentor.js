@@ -5,8 +5,13 @@ import {
   findRecord,
   updateRecord,
   deleteRecord,
-  findAllRecords,
+  findAllWhere,
   findAll
 } from './utilities'
 
-findMentorsNoobs 
+const findMentorsNoobs = ( github_handle ) => {
+  const { mentor_id } = findRecord('user', 'github_handle', github_handle )
+  findAllWhere('noobs', 'mentor_id', mentor_id ).then(noob => noob)
+}
+
+export default findMentorsNoobs 

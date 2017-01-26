@@ -5,7 +5,7 @@ import {
   findRecord,
   updateRecord,
   deleteRecord,
-  findAllRecords,
+  findAllWhere,
   findAll } from './utilities'
 
 const createNoob = attributes =>
@@ -21,7 +21,7 @@ const deleteNoobByHandle = github_handle =>
   deleteRecord('noob', 'github_handle', github_handle)
 
 const getAllNoobsByStartDate = start_date =>
-  findAllRecords('noob', 'start_date', start_date).then(noob => noob)
+  findAllWhere('noob', 'start_date', start_date).then(noob => noob)
 
 const findAllNoobs = () =>
   findAll('noob').then(noob => noob)
