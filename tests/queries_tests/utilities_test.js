@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai'
 import * as _ from '../../src/database/queries/utilities'
 
-
 describe('utilties', () => {
 
   const fakeData = [
@@ -32,27 +31,22 @@ describe('utilties', () => {
     due_date: '01-01-2019'
   }
 
+  beforeEach( () => {
+    return Promise.all([
+      _.deleteAll('task'),
+      _.createRecord('task', fakeData)
+    ])
+  })
+
   it('is an object', () => {
     expect(_).to.be.a('object')
   })
 
-  it('adds a record to the table and returns it', () => {
-    return _.createRecord('task', fakeData[0]).then( task => {
-      expect(task.user_id).to.equal(1)
-
-      return _.findAllWhere('task', 'user_id', 1).then( task => {
-        expect(task[0].user_id).to.equal(1)
-      })
-    })
-  })
-
-  _.createRecord('task', fakeData)
-
   it('finds all records', () => {
-    return _.findAll('task').then( task => {
-      expect(task[0].user_id).to.equal(1)
-      expect(task[1].user_id).to.equal(2)
-      expect(task[2].user_id).to.equal(3)
+    return _.findAll('task').then( tasks => {
+      expect(tasks[0].user_id).to.equal(1)
+      expect(tasks[1].user_id).to.equal(2)
+      expect(tasks[2].user_id).to.equal(3)
     })
   })
 
