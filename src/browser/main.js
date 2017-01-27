@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import Login from './loginPage'
+import Signup from './signup/Signup'
 
 class Farts extends Component {
   render() {
     return (
-      <Login />
+      <Signup />
     )
   }
 }

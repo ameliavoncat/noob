@@ -4,6 +4,7 @@ import path from 'path'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
+import config from './config/config'
 
 import auth from './init/auth'
 
@@ -15,9 +16,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
 
+auth( app )
 
 /* GET home page. */
 app.get('/', function(req, res, next) {
+  console.log('req.user:', req.user)
   res.sendFile(path.join(__dirname, 'public/dist/index.html'))
 })
 
