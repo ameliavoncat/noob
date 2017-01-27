@@ -2,9 +2,10 @@
 
 function help {
     echo "Usage"
-    echo "./go init         ............ Installs all dependencies and makes Noob ready for development"
-    echo "./go install_idm  ............ Installs the IDM service"
-    echo "./go reset_db **environment** ............ Drops and creates database according to environment argument"
+    echo "./go init ........................... Installs all dependencies and makes Noob ready for development"
+    echo "./go install_idm .................... Installs the IDM service"
+    echo "./go reset_db [development|test] .... Drops and creates database according to environment argument"
+    echo "./go start .......................... Starts the server in dev mode"
     echo "./go test ............ Runs reset_db test, then runs test scripts"
 }
 
