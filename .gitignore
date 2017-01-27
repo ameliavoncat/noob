@@ -1,5 +1,4 @@
-.env.development
-.env.test
+.env*
 node_modules
 npm-debug.log
 src/public/dist/*
