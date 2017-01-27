@@ -1,5 +1,5 @@
 import chai, { expect } from 'chai'
-import task from '../../src/database/queries/task'
+import * as task from '../../src/database/queries/task'
 
 describe('task', () => {
 
