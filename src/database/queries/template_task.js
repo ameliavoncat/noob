@@ -22,25 +22,14 @@ const update = ( id, attributes ) =>
 const expunge = ( column, data ) =>
   _.deleteRecord( 'template_task', column, data )
 
-const convert = github_handle => {
-  return user.create({
-    full_name: "Ugly Face",
-    github_handle: "Trump_Butt",
-    role: 'noob',
-    email: 'fart_monster@hemorroid.butt',
-  }).then(user => {
+  const convert = (templateTasks, user) {
 
-    console.log('user', user)
-    return user.start_date
-    // moment().add(7, 'days');
-    
-  })
-
+  }
 }
 
 
-  // user.findByHandle( github_handle ).then( user => {
-  //   somethingHappens.then( templateTask =>
+
+  //   templateTasks.forEach templateTask =>
   //     if ( templateTask.user_role === role ) {
   //       let attributes = {
   //         user_id: user_id,
@@ -52,7 +41,6 @@ const convert = github_handle => {
   //       task.add(attributes)
   //     }
   //   )
-  // })
 
 //forEach templateTask
 //check if user has role

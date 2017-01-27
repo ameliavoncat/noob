@@ -44,6 +44,7 @@ const deleteRecord = (table, column, data) =>
 const deleteAll = table =>
   knex.raw(`DELETE FROM ${table}`)
 
+
  export {
     createRecord,
     deleteRecord,
