@@ -29,6 +29,10 @@ function init {
     reset_db test
 }
 
+function start {
+    npm run start:dev
+}
+
 function add_env_var_to_shell {
     if [ $SHELL = "/bin/bash" ] ; then
         echo "${1}" >> ~/.bashrc
@@ -114,6 +118,8 @@ case $1 in
     reset_db) shift; reset_db $@
     ;;
     test) shift; test $@
+    ;;
+    start) start
     ;;
     *) help
 esac
