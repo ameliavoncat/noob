@@ -14,7 +14,16 @@ const app = express()
 const compiler = webpack(config);
 if(getEnv() === 'development') {
   app.use(require('webpack-dev-middleware')(compiler, {
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
+    serverSideRender: false,
+    stats: {
+      color: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false,
+    }
   }));
   app.use(require('webpack-hot-middleware')(compiler));
 }
