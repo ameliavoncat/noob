@@ -1,32 +1,26 @@
 import knex from '../knex'
 
-import {
-  createRecord,
-  findRecord,
-  updateRecord,
-  deleteRecord,
-  findAllWhere,
-  findAll } from './utilities'
+import * as utilities from './utilities'
 
-const createNoob = attributes =>
-  createRecord('noob', attributes).then( noob => noob )
+const create = attributes =>
+  utilities.createRecord('noob', attributes).then( noob => noob )
 
-const findNoobByHandle = github_handle =>
-  findRecord('noob', 'github_handle', github_handle).then(noob => noob)
+const findByHandle = github_handle =>
+  utilities.findRecord('noob', 'github_handle', github_handle).then(noob => noob)
 
-const updateNoobByHandle = (github_handle, attributes) =>
-  updateRecord('noob', 'github_handle', github_handle, attributes).then(noob => noob)
+const updateByHandle = (github_handle, attributes) =>
+  utilities.updateRecord('noob', 'github_handle', github_handle, attributes).then(noob => noob)
 
-const deleteNoobByHandle = github_handle =>
-  deleteRecord('noob', 'github_handle', github_handle)
+const deleteByHandle = github_handle =>
+  utilities.deleteRecord('noob', 'github_handle', github_handle)
 
-const getAllNoobsByStartDate = start_date =>
-  findAllWhere('noob', 'start_date', start_date).then(noob => noob)
+const getAllByStartDate = start_date =>
+  utilities.findAllWhere('noob', 'start_date', start_date).then(noob => noob)
 
-const findAllNoobs = () =>
-  findAll('noob').then(noob => noob)
+const findAll = () =>
+  utilities.findAll('noob').then(noob => noob)
 
-const graduateNoob = github_handle => {
+const graduate = github_handle => {
   return knex.transaction((t) => {
     return knex('noob')
       .transacting(t)
@@ -51,11 +45,11 @@ const graduateNoob = github_handle => {
 
 
 export {
-  createNoob,
-  findNoobByHandle,
-  updateNoobByHandle,
-  deleteNoobByHandle,
-  getAllNoobsByStartDate,
-  findAllNoobs,
-  graduateNoob
+  create,
+  findByHandle,
+  updateByHandle,
+  deleteByHandle,
+  getAllByStartDate,
+  findAll,
+  graduate
 }

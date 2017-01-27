@@ -38,24 +38,24 @@ describe('noob', () => {
     expect(Noob).to.be.a('object')
   })
 
-  describe('createNoob', () => {
+  describe('create', () => {
     it('inserts noob into table', () => {
-      return Noob.createNoob(newNoobs[0]).then(noob => {
+      return Noob.create(newNoobs[0]).then(noob => {
         expect(noob.full_name).to.equal('New Noobie')
       })
     }),
     it('increase the size fo the noobs table', () => {
-      return Noob.findAllNoobs().then(noob =>{
+      return Noob.findAll().then(noob =>{
         expect(noob.length).to.equal(1)
       })
     })
   })
 
-  describe('findNoobByHandle', () => {
+  describe('findByHandle', () => {
     it('return the all of the noob data related to github_handle', () => {
-      return Noob.createNoob(newNoobs[1])
+      return Noob.create(newNoobs[1])
         .then(_ => {
-          Noob.findNoobByHandle('Just_a_Shoe')
+          Noob.findByHandle('Just_a_Shoe')
           .then(noob => {
             expect(noob.full_name).to.equal('Shoe')
           })
@@ -63,11 +63,11 @@ describe('noob', () => {
     })
   })
 
-  describe('updateNoobByHandle', () => {
+  describe('updateByHandle', () => {
     it('updates the name of a noob associated with github_handle', () => {
-      return Noob.createNoob(newNoobs[2])
+      return Noob.create(newNoobs[2])
       .then(_ => {
-        Noob.updateNoobByHandle('dont_touch_my_hair', {full_name: 'Da REAL Solange'})
+        Noob.updateByHandle('dont_touch_my_hair', {full_name: 'Da REAL Solange'})
         .then(noob => {
           expect(noob.full_name).to.equal('Da REAL Solange')
         })
@@ -75,10 +75,10 @@ describe('noob', () => {
     })
   })
 
-  describe('deleteNoobByHandle', () => {
+  describe('deleteByHandle', () => {
     it('removes noob associated with github_handle from database', () => {
-      return Noob.deleteNoobByHandle('Just_a_Shoe').then(_ => {
-        Noob.findNoobByHandle('Just_a_Shoe')
+      return Noob.deleteByHandle('Just_a_Shoe').then(_ => {
+        Noob.findByHandle('Just_a_Shoe')
         .then(empty => {
           expect(empty).to.be.equal( undefined )
         })
@@ -86,26 +86,26 @@ describe('noob', () => {
     })
   })
 
-  describe('getAllNoobsByStartDate', () => {
+  describe('getAllByStartDate', () => {
     it('finds all noobs with the same start_date', () => {
-      return Noob.getAllNoobsByStartDate('2017-01-12').then(noob => {
+      return Noob.getAllByStartDate('2017-01-12').then(noob => {
         expect(noob.length).to.be.equal(2)
       })
     })
   })
 
-  describe('findAllNoobs', () => {
+  describe('findAll', () => {
     it('finds all the noobs in the noobs table', () => {
-      return Noob.findAllNoobs().then(noob => {
+      return Noob.findAll().then(noob => {
         expect(noob.length).to.be.equal(2)
       })
     })
   })
 
-  describe('graduateNoob', () => {
+  describe('graduate', () => {
     it('graduates a noob to mentor', () => {
-      return Noob.graduateNoob('dont_touch_my_hair').then(_ => {
-        Noob.findNoobByHandle('dont_touch_my_hair').then(empty => {
+      return Noob.graduate('dont_touch_my_hair').then(_ => {
+        Noob.findByHandle('dont_touch_my_hair').then(empty => {
           expect(empty).to.be.equal( undefined )
         })
       })
