@@ -67,6 +67,7 @@ describe('task', () => {
     task.update(14, fakeUpdate).then( task =>
       expect(task.user_id).to.equal(22)
     )
+
   )
 
   it('deletes a task', () =>

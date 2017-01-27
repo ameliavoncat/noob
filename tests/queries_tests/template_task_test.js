@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai'
 import * as templateTask from '../../src/database/queries/template_task'
 
-describe.only('templateTask', () => {
+describe('templateTask', () => {
 
   const fakeTemplateTasks = [
     {
@@ -71,6 +71,10 @@ describe.only('templateTask', () => {
       )
     )
   )
+
+  it('converts all templateTasks to tasks for a user depending on rol', () => {
+    console.log(templateTask.convert( 'nodatall' ))
+  })
 
 })
 
