@@ -14,4 +14,4 @@ const findMentorsNoobs = ( github_handle ) => {
   findAllWhere('noobs', 'mentor_id', mentor_id ).then(noob => noob)
 }
 
-export default findMentorsNoobs 
+export findMentorsNoobs 

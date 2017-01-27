@@ -15,4 +15,4 @@ const assignNoobToMentor = ( mentor_github_handle, noob_github_handle ) => {
   .then( noob => noob )
 }
 
-export default assignNoobToMentor
+export assignNoobToMentor

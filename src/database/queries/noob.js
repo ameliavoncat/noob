@@ -27,13 +27,30 @@ const findAllNoobs = () =>
   findAll('noob').then(noob => noob)
 
 const graduateNoob = github_handle => {
-  let updatedAttributes = findRecord( 'noob', 'github_handle', github_handle )
-  updatedAttributes.role = 'mentor'
-  deleteRecord('noob', 'github_handle', github_handle)
-  createRecord( 'user', 'github_handle', github_handle, updatedAttributes ).then(user => user)
+  return knex.transaction((t) => {
+    return knex('noob')
+      .transacting(t)
+      .where('github_handle', github_handle)
+      .then(result => {
+        result[0].role = 'mentor'
+        delete result[0].mentor_id
+        delete result[0].start_date
+        return knex('users')
+          .transacting(t)
+          .insert(result[0])
+          .then(_ => {
+            return knex('noob')
+            .where('github_handle', github_handle)
+            .del()
+          })
+      })
+      .then(t.commit)
+      .catch(t.rollback)
+  })
 }
 
-export default {
+
+export {
   createNoob,
   findNoobByHandle,
   updateNoobByHandle,

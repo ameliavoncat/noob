@@ -20,17 +20,17 @@ const updateUserByHandle = (github_handle, attributes) =>
 const deleteUserByHandle = github_handle =>
   deleteRecord('users', 'github_handle', github_handle)
 
-const findUserByRole = role =>
+const findUsersByRole = role =>
   findAllWhere('users', 'role', role ).then(user => user)
 
 const findAllUsers = () =>
   findAll('users').then(user => user)
 
-export default {
+export {
   createUser,
   findUserByHandle,
   updateUserByHandle,
   deleteUserByHandle,
-  findUserByRole,
+  findUsersByRole,
   findAllUsers
           }
