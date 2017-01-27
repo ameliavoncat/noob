@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai'
 import knex from '../../database/knex'
-import * as User from '../../database/queries/users'
+import * as user from '../../database/queries/users'
 
 describe('user', () => {
   const newUser = [
@@ -25,22 +25,22 @@ describe('user', () => {
   ]
 
   it('exists', () => {
-    expect(User).to.be.a('object')
+    expect(user).to.be.a('object')
   })
 
-  describe('createUser', () => {
+  describe('create', () => {
     it('inserts user into table', () => {
-      return User.createUser(newUser[0]).then(user => {
+      return user.create(newUser[0]).then(user => {
         expect(user.full_name).to.equal('Ugly Face')
       })
     })
   })
 
-  describe('findUserByHandle', () => {
+  describe('findByHandle', () => {
     it('return the all of the user data related to github_handle', () => {
-      return User.createUser(newUser[1])
+      return user.create(newUser[1])
       .then(_ => {
-        User.findUserByHandle('Drake_fabulous')
+        user.findByHandle('Drake_fabulous')
         .then(user => {
           expect(user.full_name).to.equal('Nice Person')
         })
@@ -48,11 +48,11 @@ describe('user', () => {
     })
   })
 
-  describe('updateUserByHandle', () => {
+  describe('updateByHandle', () => {
     it('updates the name of a user associated with github_handle', () => {
-      return User.createUser(newUser[2])
+      return user.create(newUser[2])
       .then(_ => {
-        User.updateUserByHandle('mystery_solved', {full_name: 'Veronica Mars'})
+        user.updateByHandle('mystery_solved', {full_name: 'Veronica Mars'})
         .then(user => {
           expect(user.full_name).to.equal('Veronica Mars')
         })
@@ -60,10 +60,10 @@ describe('user', () => {
     })
   })
 
-  describe('deleteUserByHandle', () => {
+  describe('deleteByHandle', () => {
     it('removes user associated with github_handle from database', () => {
-      return User.deleteUserByHandle('Trump_Butt').then(_ => {
-        User.findUserByHandle('Trump_Butt')
+      return user.deleteByHandle('Trump_Butt').then(_ => {
+        user.findByHandle('Trump_Butt')
         .then(empty => {
           expect(empty).to.be.equal( undefined )
         })
@@ -71,9 +71,9 @@ describe('user', () => {
     })
   })
 
-  describe('findUsersByRole', () => {
+  describe('findByRole', () => {
     it('finds the role associated with user', () => {
-      return User.findUsersByRole('mentor').then(user => {
+      return user.findByRole('mentor').then(user => {
         for(let mentor of user){
           expect(mentor.role).to.be.equal('mentor')
         }
@@ -81,9 +81,9 @@ describe('user', () => {
     })
   })
 
-  describe('findAllUsers', () => {
+  describe('findAll', () => {
     it('finds all the users in the users table', () => {
-      return User.findAllUsers('mentor').then(user => {
+      return user.findAll('mentor').then(user => {
         let count = 0
         for(let entry of user){
           count += 1
