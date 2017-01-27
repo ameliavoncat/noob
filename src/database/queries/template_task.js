@@ -1,27 +1,42 @@
 import knex from '../knex'
+import * as task from './task'
 import * as _ from './utilities'
 
-const addTemplateTask = attributes =>
+const add = attributes =>
   _.createRecord( 'template_task', attributes )
 
-const deleteAllTemplateTasks = () =>
+const deleteAll = () =>
   _.deleteAll( 'template_task' )
 
-const getAllTemplateTasks = () =>
+const getAll = () =>
   _.findAll( 'template_task' )
 
-const getTemplateTaskBy = ( column, data ) =>
+const getBy = ( column, data ) =>
   _.findAllWhere( 'template_task', column, data )
 
-const updateTemplateTask = ( column, data, attributes ) =>
-  _.updateRecord( 'template_task', column, data, attributes )
+const update = ( id, attributes ) =>
+  _.updateRecord( 'template_task', 'id', id, attributes )
 
-const template_task = {
-  add: addTemplateTask,
-  deleteAll: deleteAllTemplateTasks,
-  getAll: getAllTemplateTasks,
-  getBy: getTemplateTaskBy,
-  update: updateTemplateTask
-}
+const expunge = ( column, data ) =>
+  _.deleteRecord( 'template_task', column, data )
 
-export default template_task
+const convert = user_id =>
+
+  somethingHappens.then( templateTask =>
+    if ( templateTask.user_role === role ) {
+      let attributes = {
+        user_id: user_id,
+        body: templateTask.body,
+        is_complete: false,
+        due_date: now + templateTask.days_to_complete
+        template_task_id: templateTask.id,
+      }
+      task.add(attributes)
+    }
+  )
+
+//forEach templateTask
+//check if user has role
+//if so, add new task assigned to provided user_id
+
+export { add, deleteAll, getAll, getBy, update, expunge, convert }

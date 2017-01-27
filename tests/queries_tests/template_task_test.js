@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai'
-import templateTask from '../../src/database/queries/template_task'
+import * as templateTask from '../../src/database/queries/template_task'
 
-describe('templateTask', () => {
+describe.only('templateTask', () => {
 
   const fakeTemplateTasks = [
     {
@@ -57,7 +57,19 @@ describe('templateTask', () => {
   })
 
   it('updates a template task', () =>
-    templateTask.update( )
+    templateTask.update(9, fakeUpdate).then( _ =>
+      templateTask.getBy('id', 9).then( updatedTask =>
+        expect(updatedTask[0].name).to.equal('Sing')
+      )
+    )
+  )
+
+  it('deletes a templateTask by id', () =>
+    templateTask.expunge('id', 11).then( _ =>
+      templateTask.getBy('id', 11).then( deletedTask =>
+        expect(deletedTask).to.deep.equal([])
+      )
+    )
   )
 
 })
