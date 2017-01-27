@@ -1,4 +1,5 @@
 import knex from '../knex'
+import moment from 'moment'
 import * as _ from './utilities'
 
 const add = attributes =>
@@ -19,4 +20,18 @@ const expunge = ( column, data ) =>
 const deleteAll = () =>
   _.deleteAll( 'task' )
 
-export { add, getAll, getBy, update, expunge, deleteAll }
+const convertTemplateTasks = ( templateTasks, user ) => {
+  let tasks = templateTasks.map( templateTask => {
+    const attributes = {
+        user_id: user.id,
+        is_complete: false,
+        body: templateTask.body,
+        due_date: moment( user.start_date ).add( templateTask.days_to_complete, 'days' ),
+        template_task_id: templateTask.id
+      }
+      return attributes
+  })
+  return add(tasks)
+}
+
+export { add, getAll, getBy, update, expunge, deleteAll, convertTemplateTasks }

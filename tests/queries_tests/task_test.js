@@ -31,6 +31,28 @@ describe('task', () => {
     due_date: '2019-02-01'
   }
 
+  const fakeTemplateTasks = [
+    {
+      name: 'Massage',
+      body: 'Give a senior Learner a foot massage for one hour',
+      user_role: 'noob',
+      days_to_complete: 7,
+      id:0
+    },
+    {
+      name: 'Breath',
+      body: 'Take 7 deep breaths',
+      user_role: 'noob',
+      days_to_complete: -4,
+      id: 100000
+    }
+  ]
+
+  const fakeUser = {
+    id: 1,
+    start_date: '2017-02-26'
+  }
+
   beforeEach( () =>
     Promise.all([
       task.deleteAll(),
@@ -76,6 +98,12 @@ describe('task', () => {
       return task.getBy('user_id', 2).then( nothing =>
         expect(nothing).to.deep.equal([])
       )
+    })
+  )
+
+  it('creates tasks for a user from a list of template tasks', () =>
+    task.convertTemplateTasks(fakeTemplateTasks, fakeUser).then( convertedTasks => {
+      expect(convertedTasks[0].template_task_id).to.equal(0)
     })
   )
 
