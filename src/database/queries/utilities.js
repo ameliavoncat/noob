@@ -22,7 +22,7 @@ const findAllWhere = (table, column, data) =>
     .where(column, data)
     .returning('*')
 
-const findAll = (table) =>
+const findAll = table =>
   knex
     .table(table)
     .returning('*')
@@ -41,6 +41,10 @@ const deleteRecord = (table, column, data) =>
     .where(column, data)
     .del()
 
+const deleteAll = table =>
+  knex.raw(`DELETE FROM ${table}`)
+
+
  export {
     createRecord,
     deleteRecord,
@@ -48,5 +52,6 @@ const deleteRecord = (table, column, data) =>
     firstRecord,
     updateRecord,
     findAllWhere,
-    findAll
+    findAll,
+    deleteAll
 }
