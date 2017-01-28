@@ -7,7 +7,6 @@ const createRecord = (table, attributes) =>
     .table(table)
     .insert(attributes)
     .returning('*')
-    .then(firstRecord)
 
 const findRecord = (table, column, data) =>
   knex

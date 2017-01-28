@@ -31,4 +31,4 @@ export {
   findByRole,
   findAll,
   deleteAll
-          }
+}
