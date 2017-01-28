@@ -44,7 +44,6 @@ describe('admin', () => {
     it('assigns a noob to a mentor', () => {
       return admin.assignTo('Yum_yum_Gouda1', 'I_love_money')
       .then(updatedUser => {
-        console.log('updatedUser:', updatedUser)
         return user.findByHandle('Yum_yum_Gouda1').then( mentor =>{
           expect(updatedUser.full_name).to.be.equal('Mr.Krabs')
           expect(updatedUser.mentor_id).to.be.equal(mentor.id)
