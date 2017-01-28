@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
 import config from '../webpack.config'
-import { config, getEnv } from './config/config'
+import { parseConfig, getEnv } from './config/config'
 import auth from './init/auth'
 
 const app = express()
@@ -35,8 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 auth( app )
 
 /* GET home page. */
-app.get('/', function(req, res, next) {
-  console.log('req.user:', req.user)
+app.get('*', function(req, res, next) {
   res.sendFile(path.join(__dirname, 'public/dist/index.html'))
 })
 

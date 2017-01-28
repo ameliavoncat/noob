@@ -5,34 +5,29 @@ export default class Signup extends Component {
   constructor() {
     super()
     this.state = {
-      role: null
+      showStartDate: false
     }
   }
 
-  updateSignupState = ( key, value ) =>
-    this.setState({
-      [key]: value
-    })
+  toggleStartDate = () =>
+    this.setState({ showStartDate: !this.state.showStartDate })
 
   signUp = role => {
     console.log(`Signing up new ${role}!`)
   }
 
   render() {
-    if ( this.state.role === null ) {
-      return (
-        <div>
-          <div>Choose your role</div>
-          <div onClick={() => this.signUp('mentor')}>
-            Mentor
-          </div>
-          <div onClick={() => this.updateSignupState('role', 'noob')}>
-            Noob
-          </div>
-        </div>
-      )
-    } else {
-      return <ChooseStartDate signUp={this.signUp}/>
-    }
+    const startDatePicker = this.state.showStartDate ?
+      <ChooseStartDate signUp={this.signUp}/> :
+      null
+
+    return (
+      <div>
+        <div>Choose your role</div>
+        <div onClick={() => this.signUp('mentor')}>Mentor</div>
+        <div onClick={this.toggleStartDate}>Noob</div>
+        {startDatePicker}
+      </div>
+    )
   }
 }
