@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai'
 import * as task from '../../src/database/queries/task'
 
-describe('task', () => {
+describe.only('task', () => {
 
   const fakeTasks = [
     {
@@ -31,16 +31,40 @@ describe('task', () => {
     due_date: '2019-02-01'
   }
 
-  beforeEach( () => {
-    return Promise.all([
+  const fakeTemplateTasks = [
+    {
+      name: 'Massage',
+      body: 'Give a senior Learner a foot massage for one hour',
+      user_role: 'noob',
+      days_to_complete: 7,
+      id:0
+    },
+    {
+      name: 'Breath',
+      body: 'Take 7 deep breaths',
+      user_role: 'noob',
+      days_to_complete: -4,
+      id: 100000
+    }
+  ]
+
+  const fakeUser = {
+    id: 1,
+    start_date: '2017-02-26'
+  }
+
+  const fakeTime = new Date('2017-03-05 00:00:00-08')
+
+  beforeEach( () =>
+    Promise.all([
       task.deleteAll(),
       task.add(fakeTasks)
     ])
-  })
+  )
 
-  it('should exist', () => {
+  it('should exist', () =>
     expect(task).to.be.a('object')
-  })
+  )
 
   it('gets all tasks', () =>
     task.getAll().then( tasks => {
@@ -51,9 +75,9 @@ describe('task', () => {
   )
 
   it('gets task by id', () =>
-    task.getBy('id', 7).then( task => {
+    task.getBy('id', 7).then( task =>
       expect(task[0].user_id).to.equal(2)
-    })
+    )
   )
 
   it('gets tasks by user_id', () =>
@@ -64,9 +88,10 @@ describe('task', () => {
   )
 
   it('updates a task', () =>
-    task.update('user_id', 2, fakeUpdate).then( task => {
+    task.update(14, fakeUpdate).then( task =>
       expect(task.user_id).to.equal(22)
-    })
+    )
+
   )
 
   it('deletes a task', () =>
@@ -75,6 +100,14 @@ describe('task', () => {
       return task.getBy('user_id', 2).then( nothing =>
         expect(nothing).to.deep.equal([])
       )
+    })
+  )
+
+  it('creates tasks for a user from a list of template tasks', () =>
+    task.convertTemplateTasks(fakeTemplateTasks, fakeUser).then( convertedTasks => {
+      expect(convertedTasks[0].template_task_id).to.equal(0)
+      expect(convertedTasks[0].body).to.equal('Give a senior Learner a foot massage for one hour')
+      expect(convertedTasks[0].due_date.getTime()).to.equal(fakeTime.getTime())
     })
   )
 
