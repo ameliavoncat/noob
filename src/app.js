@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 /* GET home page. */
-app.get('/', function(req, res, next) {
+app.get('*', function(req, res, next) {
   res.sendFile(path.join(__dirname, 'public/dist/index.html'))
 })
 

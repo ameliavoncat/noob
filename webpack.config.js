@@ -23,7 +23,7 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
   entry: [
     'webpack/hot/only-dev-server',
-    './src/browser/main.js',
+    './src/browser/main.js'
   ],
   module: {
     loaders: [
